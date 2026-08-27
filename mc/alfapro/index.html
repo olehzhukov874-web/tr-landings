@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>AlfaPro full® — Üreticinin Tek Resmî Sitesi | Orijinalini Sipariş Edin</title>
+<meta name="description" content="AlfaPro full® ürününün tek resmî sitesi. Doğrudan üreticiden orijinal ürün, kapıda ödeme, Türkiye'nin her yerine teslimat.">
+<style>
+:root{
+  --accent:#1f6feb; --accent-dark:#0d47a1;
+  --ink:#0f1b2d; --muted:#5b6b80; --line:#e6ebf2;
+  --bg:#fff; --bg-soft:#f5f8fc; --bg-soft2:#eef4fb;
+  --ok:#12a150; --ok-bg:#e8f7ee; --danger:#e5484d; --danger-bg:#fdecec;
+  --gold:#f6a609; --gold-dark:#b98900;
+  --radius:16px; --shadow:0 10px 30px rgba(15,27,45,.08); --shadow-lg:0 20px 50px rgba(15,27,45,.14);
+  --maxw:1040px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+img{max-width:100%; display:block}
+a{color:inherit}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 18px}
+.section{padding:44px 0}
+@media(max-width:640px){.section{padding:32px 0}}
+h1,h2,h3{line-height:1.15; margin:0 0 .5em; letter-spacing:-.02em}
+h1{font-size:clamp(24px,4.6vw,40px); font-weight:800}
+h2{font-size:clamp(21px,3.4vw,30px); font-weight:800}
+h3{font-size:clamp(16px,2.2vw,20px); font-weight:700}
+p{margin:0 0 1em}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:10px}
+.center{text-align:center}
+.muted{color:var(--muted)}
+
+/* buttons */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; border:none; cursor:pointer;
+  font-family:inherit; font-weight:800; font-size:17px; padding:16px 28px; border-radius:14px; text-decoration:none;
+  transition:transform .12s ease, box-shadow .2s ease; text-align:center}
+.btn-primary{color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent-dark)); box-shadow:0 10px 24px rgba(31,111,235,.35)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-cta{position:relative; overflow:hidden}
+.btn-cta::after{content:""; position:absolute; top:0; left:-120%; width:60%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent); transform:skewX(-20deg); animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%,60%{left:-120%}100%{left:130%}}
+
+/* header */
+header.top{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid var(--line)}
+.topbar{background:linear-gradient(90deg,var(--accent-dark),var(--accent)); color:#fff; font-size:12.5px; font-weight:600; text-align:center; padding:6px 12px}
+.top-inner{display:flex; align-items:center; justify-content:space-between; height:60px; gap:10px}
+.logo{display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; letter-spacing:-.02em; min-width:0}
+.logo .mark{width:36px; height:36px; border-radius:10px; flex:none; display:grid; place-items:center; color:#fff; font-size:17px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark))}
+.logo small{font-weight:600; font-size:11px; color:var(--muted); display:block; letter-spacing:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.vf{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:var(--ok); background:var(--ok-bg);
+  border:1px solid #bfe9cf; padding:6px 11px; border-radius:999px; white-space:nowrap}
+@media(max-width:480px){.vf span{display:none} .vf{padding:7px}}
+
+/* hero */
+.hero{background:radial-gradient(1200px 500px at 80% -10%,rgba(31,111,235,.10),transparent 60%),linear-gradient(180deg,var(--bg-soft),#fff); padding:26px 0 28px}
+.hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px 32px; align-items:start}
+.hero-grid>#buy{grid-row:1/3; grid-column:2}
+.hero-grid>.scarcity{grid-column:1; margin-top:0}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr; gap:14px} .hero-grid>#buy{grid-row:auto; grid-column:1} .hero-grid>.scarcity{order:3} .hero{padding:12px 0 20px}}
+.badges-row{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 12px}
+.pill{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; background:#fff; border:1px solid var(--line);
+  padding:6px 11px; border-radius:999px; box-shadow:0 2px 6px rgba(15,27,45,.04)}
+.pill.ok{color:var(--ok); border-color:#bfe9cf; background:var(--ok-bg)}
+.product-card{background:#fff; border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow-lg); padding:16px; position:relative; text-align:center}
+@media(min-width:861px){.product-card>div{text-align:center}}
+.product-card .ribbon{display:inline-block; margin-bottom:6px; color:#fff; font-weight:800; font-size:13px; padding:7px 12px; border-radius:11px;
+  background:linear-gradient(135deg,var(--ok),#0b7a3b); box-shadow:0 6px 16px rgba(18,161,80,.35)}
+.product-card .disc-ribbon{position:absolute; top:14px; right:14px; z-index:2; background:linear-gradient(135deg,var(--danger),#c11); color:#fff; font-weight:800; font-size:13px; padding:7px 12px; border-radius:11px}
+.product-card img{margin:8px auto 6px; max-height:300px; width:auto}
+@media(max-width:860px){.product-card{padding:10px 12px 8px; display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:center; text-align:left} .product-card img{max-height:120px; margin:0} .product-card .ribbon{position:static; display:inline-block; margin-bottom:6px} .product-card .disc-ribbon{top:10px; right:10px} .shotcap{font-size:12px}}
+.shotcap{font-size:12.5px; color:var(--muted); font-weight:600}
+.price-box{display:flex; align-items:baseline; gap:12px; margin:12px 0 4px; flex-wrap:wrap}
+.price-new{font-size:40px; font-weight:800; letter-spacing:-.03em; line-height:1}
+.price-old{font-size:20px; color:var(--muted); text-decoration:line-through}
+.save-badge{background:var(--danger-bg); color:var(--danger); font-weight:800; font-size:13.5px; padding:5px 10px; border-radius:9px}
+.pricenote{font-size:12.5px; color:var(--muted); margin:0 0 12px}
+@media(max-width:640px){h1{font-size:22px} .pill{font-size:11px; padding:5px 9px} .badges-row{gap:5px; margin-bottom:8px} .pricenote{display:none} .form-card .sub{display:none} .price-box{margin:8px 0 10px} .price-new{font-size:34px}}
+
+/* form card */
+.form-card{background:#fff; border:2px solid var(--accent); border-radius:18px; padding:18px; color:var(--ink); box-shadow:var(--shadow)}
+.form-card h3{margin-bottom:2px; font-size:18px}
+.form-card .sub{color:var(--muted); font-size:13.5px; margin-bottom:12px}
+.inp{width:100%; padding:14px 15px; border:1.5px solid #cfd8e3; border-radius:12px; font-size:16px; font-family:inherit; outline:none; margin-bottom:10px;
+  transition:border-color .15s, box-shadow .15s}
+.inp:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(31,111,235,.12)}
+.inp.bad{border-color:var(--danger); box-shadow:0 0 0 4px rgba(229,72,77,.12)}
+.phone-field{display:flex; gap:8px; margin-bottom:10px}
+.phone-field .inp{margin-bottom:0; flex:1; min-width:0}
+.phone-field .p48{flex:none; display:flex; align-items:center; gap:4px; font-weight:800; font-size:15px; color:var(--ink); background:var(--bg-soft); border:1.5px solid #cfd8e3; border-radius:12px; padding:0 12px}
+.ph-err{display:none; font-size:12.5px; color:var(--danger); font-weight:600; margin:-4px 0 8px 2px}
+.phone-field.bad+ .ph-err{display:block}
+.form-card .btn{width:100%; font-size:18px; padding:17px}
+.form-note{font-size:12.5px; color:var(--muted); text-align:center; margin:8px 0 0}
+.today-line{font-size:13px; font-weight:700; color:var(--ok); text-align:center; margin:10px 0 0}
+.today-line b{font-variant-numeric:tabular-nums}
+.ok-msg{display:none; background:var(--ok-bg); border-radius:14px; padding:20px 16px; text-align:center}
+.ok-msg .ok-big{width:56px; height:56px; margin:0 auto 10px; border-radius:50%; background:var(--ok); color:#fff; display:grid; place-items:center}
+.ok-msg b{color:var(--ok); font-size:17px; display:block; margin-bottom:6px}
+.ok-msg .ok-when{color:#0c6b36; font-size:14.5px; margin:0 0 8px}
+.ok-msg .ok-keep{color:var(--muted); font-size:13px; font-weight:600; margin:0}
+.sig{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:14px}
+.sig div{font-size:11.5px; line-height:1.25; font-weight:600; color:var(--ink); text-align:center; background:var(--bg-soft); border-radius:12px; padding:10px 4px}
+.sig svg{width:22px; height:22px; display:block; margin:0 auto 6px; color:var(--accent)}
+.fake-hint{display:block; text-align:center; margin-top:12px; font-size:13px; font-weight:700; color:var(--danger); text-decoration:none}
+
+/* scarcity */
+.scarcity{background:linear-gradient(135deg,#111827,#1f2937); color:#fff; border-radius:var(--radius); padding:16px 18px; display:flex;
+  align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; box-shadow:var(--shadow); margin-top:18px}
+.scarcity.kept{background:linear-gradient(135deg,#0b7a3b,#12a150)} .scarcity.kept .stock-line b{color:#fff}
+.scarcity .left{display:flex; align-items:center; gap:12px; font-weight:700; font-size:14.5px}
+.timer{display:flex; gap:6px}
+.timer .unit{background:rgba(255,255,255,.12); border-radius:10px; padding:7px 10px; text-align:center; min-width:52px}
+.timer .num{font-size:22px; font-weight:800; line-height:1; font-variant-numeric:tabular-nums}
+.timer .ms{min-width:44px; opacity:.85} .timer .ms .num{color:#ff8a80}
+.timer .lab{font-size:10px; opacity:.7; text-transform:uppercase; letter-spacing:.06em}
+.stock-line{font-size:13.5px; min-width:190px}
+.stock-line b{color:#ffd27a; display:inline-block; font-variant-numeric:tabular-nums; transition:transform .2s}
+.stock-line b.pop{animation:pop .9s ease}
+@keyframes pop{0%{transform:scale(1);color:#ffd27a}30%{transform:scale(1.45);color:#ff6b6b}100%{transform:scale(1);color:#ffd27a}}
+.stockbar{height:7px; background:rgba(255,255,255,.15); border-radius:99px; margin-top:6px; overflow:hidden; width:100%; max-width:220px}
+.stockbar>i{display:block; height:100%; background:linear-gradient(90deg,#f6a609,#e5484d); border-radius:99px; transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.sold-toast{position:fixed; left:12px; bottom:84px; z-index:70; background:#fff; color:var(--ink); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow-lg); padding:10px 14px; font-size:13px; display:flex; gap:10px; align-items:center; max-width:300px;
+  transform:translateY(20px); opacity:0; transition:all .4s; pointer-events:none}
+.sold-toast.show{transform:none; opacity:1}
+.sold-toast .av{width:30px; height:30px; border-radius:50%; background:var(--bg-soft2); color:var(--accent); font-weight:800; display:grid; place-items:center; flex:none}
+@media(min-width:821px){.sold-toast{bottom:20px}}
+
+/* seal */
+.seal{display:flex; gap:14px; align-items:center; background:linear-gradient(180deg,#fffaf0,#fff4dc); border:1px solid #f0d9a4; border-radius:var(--radius); padding:14px 16px}
+.seal svg{width:52px; height:52px; flex:none}
+.seal b{display:block; font-size:15px; color:#6b4d00} .seal span{font-size:13px; color:#7a5f1a}
+
+/* alert */
+.alert{background:var(--danger-bg); border:1px solid #f6c9ca; border-radius:var(--radius); padding:20px 22px}
+.alert h2{color:var(--danger); display:flex; align-items:center; gap:10px; font-size:22px}
+.alert p{color:#6b2325; font-size:15px; margin-bottom:8px} .alert p:last-child{margin:0}
+
+/* comparison */
+.cmp-scroll{overflow-x:auto}
+.cmp{width:100%; border-collapse:separate; border-spacing:0; background:#fff; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); min-width:520px}
+.cmp th,.cmp td{padding:13px 14px; text-align:left; font-size:14px; border-bottom:1px solid var(--line); vertical-align:top}
+.cmp thead th{background:var(--bg-soft); font-weight:800; font-size:13.5px}
+.cmp th.ok{color:var(--ok)} .cmp th.no{color:var(--danger)}
+.cmp tr:last-child td{border-bottom:none}
+.cmp td:first-child{font-weight:700; white-space:nowrap}
+.cmp td:nth-child(2){color:#0c6b36} .cmp td:nth-child(3){color:#8a2b2e}
+@media(max-width:640px){.cmp{min-width:0} .cmp td:first-child{white-space:normal} .cmp th,.cmp td{padding:10px 9px; font-size:12.5px}}
+
+/* steps */
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:20px}
+@media(max-width:820px){.steps{grid-template-columns:1fr; gap:14px}}
+.step{position:relative; padding-left:58px; font-size:14.5px; color:#33425a}
+.step .n{position:absolute; left:0; top:0; width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-dark)); color:#fff;
+  display:grid; place-items:center; font-weight:800; font-size:18px; box-shadow:0 8px 18px rgba(31,111,235,.3)}
+
+/* guarantees */
+.guar{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px}
+@media(max-width:820px){.guar{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.guar{grid-template-columns:1fr}}
+.card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:20px 16px; box-shadow:var(--shadow)}
+.card .ic{width:46px; height:46px; border-radius:13px; display:grid; place-items:center; margin:0 auto 10px; background:var(--bg-soft2); color:var(--accent)}
+.card .ic svg{width:24px; height:24px}
+.card b{display:block; font-size:15px; margin-bottom:4px} .card span{font-size:13px; color:var(--muted)}
+.guar .card{text-align:center}
+
+/* delivery */
+.deliv{margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow)}
+.d-head{font-size:15px; margin-bottom:12px} .d-head b{margin-right:8px} .d-head span{color:var(--muted); font-size:13px; font-weight:600}
+.d-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+@media(max-width:720px){.d-row{grid-template-columns:1fr}}
+.d-row>div{display:flex; gap:10px; align-items:center; background:var(--bg-soft); border-radius:12px; padding:10px 12px}
+.d-row svg{width:30px; height:30px; flex:none; color:var(--accent)}
+.d-row b{display:block; font-size:14px} .d-row span{font-size:12.5px; color:var(--muted)}
+
+/* reviews */
+.rv-head{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px}
+.rv-score{display:flex; align-items:center; gap:10px; font-size:14px; color:var(--muted); font-weight:600}
+.rv-score b{font-size:26px; color:var(--ink)}
+.stars{color:var(--gold); font-size:15px; letter-spacing:1.5px}
+.reviews{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+@media(max-width:820px){.reviews{grid-template-columns:1fr}}
+.review{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+.review.hid{display:none}
+.review .head{display:flex; align-items:center; gap:10px; margin-bottom:8px}
+.avatar{width:40px; height:40px; border-radius:50%; display:grid; place-items:center; font-weight:800; color:#fff; font-size:16px; flex:none; position:relative; overflow:hidden}
+.avatar img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:50%}
+.review .name{font-weight:700; font-size:14.5px; display:flex; align-items:center; gap:6px} .review .name .src{width:15px; height:15px} .review .city{font-size:12px; color:var(--muted)}
+.review .verified{font-size:11.5px; color:var(--ok); font-weight:700; margin-left:auto; white-space:nowrap}
+.review p{margin:0; font-size:14px; color:#33425a} .review .stars{font-size:13px; margin-bottom:6px}
+.rv-more{display:block; margin:16px auto 0; background:#fff; border:1.5px solid var(--line); color:var(--ink); box-shadow:none; font-size:15px; padding:13px 26px}
+
+/* FAQ */
+.faq{max-width:760px; margin:18px auto 0}
+.q{background:#fff; border:1px solid var(--line); border-radius:14px; margin-bottom:10px; overflow:hidden}
+.q button{width:100%; text-align:left; background:none; border:none; padding:15px 18px; font-size:15px; font-weight:700; font-family:inherit; cursor:pointer;
+  display:flex; justify-content:space-between; gap:14px; align-items:center; color:var(--ink)}
+.q .chev{transition:transform .25s; flex:none; color:var(--accent)}
+.q.open .chev{transform:rotate(180deg)}
+.q .ans{max-height:0; overflow:hidden; transition:max-height .3s ease; color:var(--muted); font-size:14.5px}
+.q .ans-inner{padding:0 18px 16px}
+
+/* final order */
+.order{background:radial-gradient(900px 400px at 15% 0%,rgba(31,111,235,.10),transparent 60%),linear-gradient(180deg,#0f1b2d,#16233a); color:#fff; border-radius:22px; padding:28px; box-shadow:var(--shadow-lg)}
+@media(max-width:640px){.order{padding:20px 16px}}
+.order-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:center}
+@media(max-width:820px){.order-grid{grid-template-columns:1fr; gap:18px}}
+.order h2{color:#fff} .order .muted{color:#b7c3d6}
+.order .price-old{color:#93a4bd}
+.order ul.perks{list-style:none; padding:0; margin:14px 0 0}
+.order ul.perks li{display:flex; gap:10px; align-items:center; margin-bottom:8px; font-size:14.5px; color:#cdd8e8}
+.order ul.perks li svg{color:#5fe3a1; flex:none}
+.order .form-card{border-color:#fff}
+
+/* sticky */
+.sticky-cta{position:fixed; left:0; right:0; bottom:0; z-index:60; background:#fff; border-top:1px solid var(--line); box-shadow:0 -6px 20px rgba(15,27,45,.1);
+  padding:9px 14px; display:none; align-items:center; justify-content:space-between; gap:12px; transform:translateY(110%); transition:transform .3s}
+.sticky-cta.on{transform:none}
+.sticky-cta .p{font-weight:800; font-size:17px; line-height:1.1} .sticky-cta .p small{display:block; font-size:12px; color:var(--muted); font-weight:600; text-decoration:line-through}
+.sticky-cta .btn{padding:12px 18px; font-size:15px; flex:none}
+@media(max-width:820px){.sticky-cta{display:flex}}
+
+/* footer */
+footer{background:var(--bg-soft); border-top:1px solid var(--line); padding:28px 0 90px; font-size:13px; color:var(--muted)}
+@media(min-width:821px){footer{padding-bottom:28px}}
+.legal{background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; font-size:12.5px; margin-bottom:14px}
+.legal b{color:var(--ink)}
+footer .links{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:10px}
+footer a{text-decoration:none; font-weight:600}
+.disclaimer{font-size:12px; color:#8493a8}
+body.free .disc,body:not(.free) .nodisc{display:none}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">Üreticinin tek resmî sitesi · Kapıda ödeme</div>
+  <div class="wrap top-inner">
+    <div class="logo">
+      <span class="mark">A</span>
+      <span style="min-width:0">AlfaPro full<sup style="font-size:11px">®</sup><small>Üreticinin tek resmî sitesi</small></span>
+    </div>
+    <div class="vf"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1 3 5v6c0 5.6 3.8 10.7 9 12 5.2-1.3 9-6.4 9-12V5l-9-4zm-1.2 15.2-4-4 1.4-1.4 2.6 2.6 5.6-5.6L17.8 9l-7 7.2z"/></svg><span>Doğrudan satış</span></div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="product-card">
+          <span class="disc-ribbon disc">-50%</span>
+          <img src="../../img/meta-alfapro.png" alt="AlfaPro full">
+          <div><span class="ribbon">Orijinal</span><div class="shotcap">Mühürlü ve parti numaralı orijinal kutu</div></div>
+        </div>
+      </div>
+        <div class="scarcity" id="scarcity">
+          <div class="left">
+            <span>🔥 <span class="disc">-50% kampanyasının bitmesine kalan süre:</span><span class="nodisc">Teklifin bitmesine kalan süre:</span></span>
+            <div class="timer"><div class="unit"><div class="num" id="t-min">15</div><div class="lab">min</div></div><div class="unit"><div class="num" id="t-sec">00</div><div class="lab">sek</div></div><div class="unit ms"><div class="num" id="t-ms">00</div><div class="lab">ms</div></div></div>
+          </div>
+          <div class="stock-line">Kalan: <b id="stockNum">46</b> kutu, mevcut partiden
+            <div class="stockbar"><i id="stockBar" style="width:70%"></i></div></div>
+        </div>
+        <div class="scarcity kept" id="kept" style="display:none"><div class="left">✔ <span class="disc">-50% kampanya fiyatı ziyaretiniz için ayrıldı</span><span class="nodisc">Teklif ziyaretiniz için ayrıldı</span></div>
+          <div class="stock-line">Kalan: <b id="stockNum2">46</b> kutu, mevcut partiden</div></div>
+
+      <div id="buy">
+        <div class="badges-row">
+          <span class="pill ok">✔ Üreticiden orijinal ürün</span><span class="pill">💳 Kapıda ödeme</span><span class="pill">🚚 1-3 iş gününde teslimat</span>
+        </div>
+        <h1>AlfaPro full® — Türkiye'de üreticinin tek resmî sitesi</h1>
+        <div class="price-box">
+          <span class="price-new">990 TL</span>
+          <span class="price-old">1980 TL</span>
+          <span class="save-badge disc">-50%</span>
+        </div>
+        <p class="pricenote">Kampanya fiyatı mevcut parti tükenene kadar geçerlidir.</p>
+
+        <div class="form-card">
+          <form class="order-form" autocomplete="on" novalidate>
+            <h3>Orijinal ürünü sipariş edin</h3>
+            <div class="sub">Formu doldurun: bir danışman birkaç dakika içinde sizi arayarak adresi ve teslimat gününü onaylar. Ön ödeme yoktur.</div>
+            <input class="inp" type="text" name="name" placeholder="Ad ve soyad" autocomplete="name">
+            <div class="phone-field"><span class="p48">🇹🇷 +90</span><input class="inp" type="tel" name="phone" placeholder="532 123 45 67" inputmode="numeric" autocomplete="tel"></div>
+            <p class="ph-err">Geçerli bir telefon numarası girin</p>
+            <input type="hidden" name="kw" value="tr-mc-alfapro">
+            <button class="btn btn-primary btn-cta" type="submit">ORİJİNALİNİ SİPARİŞ ET</button>
+            <p class="today-line">🛒 Bugün sipariş verenler <b class="todayN">—</b> kişi</p>
+            <p class="form-note">Ön ödeme yok · teslimatta kontrol edersiniz · 🔒 SSL şifreleme</p>
+          </form>
+          <div class="ok-msg"><div class="ok-big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <b>Teşekkürler! Siparişiniz alındı.</b><p class="ok-when"></p><p class="ok-keep">🔔 Telefonunuzu yakınınızda tutun ve aramayı yanıtlayın.</p></div>
+        </div>
+        <div class="sig">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h3"/></svg>Kapıda<br>ödeme</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Kargo<br>1-3 gün</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M9 11l1.5 1.5L13.5 9"/></svg>Ödemeden önce<br>kontrol</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Danışman<br>sizi arar</div>
+        </div>
+        <a class="fake-hint" href="#podrobki">⚠ Taklitlere dikkat — orijinali nasıl anlayacağınızı öğrenin</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEAL ============ -->
+<div class="wrap" style="margin-top:18px">
+  <div class="seal">
+    <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#fff" stroke="#b98900" stroke-width="1.5"/><circle cx="20" cy="20" r="14.5" fill="none" stroke="#b98900" stroke-width=".8" stroke-dasharray="2 1.5"/><path d="M13.5 20.5l4 4 9-9" fill="none" stroke="#b98900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><b>Orijinal ürün — doğrudan satış</b><span>Her gönderide üretici mührü ve parti numarası bulunur. Aracı yok, ek fiyat farkı yok.</span></div>
+  </div>
+</div>
+
+<!-- ============ WARNING ============ -->
+<section class="section" id="podrobki" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="alert">
+      <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 16H3z"/><path d="M12 9v5"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg>Sahte ürünlere dikkat</h2>
+      <p>Son dönemde internette AlfaPro full® ürününün pek çok taklidi ortaya çıktı. İlan sitelerinde ve rastgele çevrimiçi mağazalarda satılıyorlar — adı çok benzer, kutusu neredeyse aynı, ancak içeriği ve kaynağı belirsiz.</p>
+      <p>Orijinal AlfaPro full® ne mağazalarda ne de pazaryerlerinde satılıyor. Sipariş yalnızca burada mümkün — doğrudan üreticiden, aracısız ve fiyat farkı olmadan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="center">Orijinal ve taklit — farklar</h2>
+    <div class="cmp-scroll">
+      <table class="cmp">
+        <thead><tr><th>Özellik</th><th class="ok">✓ Orijinal (bu site)</th><th class="no">✕ Taklit</th></tr></thead>
+        <tbody>
+          <tr><td>Etkin içerik</td><td>Tam, üretici tarafından onaylı</td><td>Azaltılmış veya yok</td></tr>
+          <tr><td>Mühür ve parti numarası</td><td>Her kutuda mevcut</td><td>Yok veya sahte</td></tr>
+          <tr><td>Ödeme</td><td>Kontrolden sonra kapıda</td><td>Peşin isteniyor</td></tr>
+          <tr><td>Fiyat</td><td>Üreticiden dürüst fiyat</td><td>Şüpheli derecede düşük</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW TO CHECK ============ -->
+<section class="section" style="background:var(--bg-soft)">
+  <div class="wrap">
+    <div class="center"><div class="eyebrow">Üreticinin tek resmî sitesi</div><h2>Orijinali nasıl anlarsınız</h2></div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div>Yalnızca bu siteden sipariş verin — üreticinin tek doğrudan satış kanalı burasıdır.</div>
+      <div class="step"><div class="n">2</div>Teslimatta kutunun üzerindeki mührü ve parti numarasını kontrol edin.</div>
+      <div class="step"><div class="n">3</div>Paketi kurye önünde kontrol ettikten sonra ödeyin.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEES ============ -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="center">Risksiz sipariş</h2>
+    <div class="guar">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h3"/></svg></div><b>Ödeme yalnızca teslimatta</b><span>Ön ödeme yok. Kuryeye nakit veya kartla, paket elinize geçtikten sonra ödersiniz.</span></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M9 11l1.5 1.5L13.5 9"/></svg></div><b>Ödemeden önce kontrol</b><span>Paketi kurye önünde açıp kontrol edersiniz. Bir sorun görürseniz ücret ödemeden reddedebilirsiniz.</span></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div><b>Gizli paketleme</b><span>İçeriğe dair hiçbir bilgi taşımayan nötr bir kutuyla gönderiyoruz. Bilgileriniz yalnızca teslimat için kullanılır.</span></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div><b>Telefonla onay</b><span>Formu gönderdikten sonra bir danışman sizi arar; siparişi, adresi ve teslimat gününü onaylar. Sorularınızı da yanıtlar.</span></div>
+    </div>
+
+    <div class="deliv">
+      <div class="d-head">🚚 <b>Türkiye'nin her yerine teslimat</b><span>24 saat içinde kargoda · kapıda ödeme</span></div>
+      <div class="d-row">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="18" cy="6" r="1.1" fill="currentColor" stroke="none"/></svg><div><b>Kargo şubesinden teslim</b><span>size uygun saatte, gizli paket</span></div></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><div><b>Yurtiçi Kargo / MNG Kargo</b><span>adrese teslim, 1-3 gün</span></div></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 8l9 6 9-6"/></svg><div><b>PTT Kargo</b><span>PTT şubesinden teslim alma</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--REVIEWS-->
+<section class="section" style="background:var(--bg-soft)">
+  <div class="wrap">
+    <div class="rv-head">
+      <div><div class="eyebrow">Müşteri görüşleri</div><h2 style="margin:0">Buradan sipariş verenler ne yazıyor</h2></div>
+      <div class="rv-score"><b>4,8</b><div><div class="stars">★★★★★</div>1 187 görüşe göre</div></div>
+      <span class="pill ok" style="align-self:center">↻ Müşterilerin %87'si yeniden sipariş veriyor</span>
+    </div>
+    <div class="reviews" id="reviews">
+      <div class="review"><div class="head"><div class="avatar" style="background:#1f6feb">A<img src="../../img/av/rv0.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Ayşe K.<svg class="src" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877f2"/><path d="M13.3 20v-6.2h2.1l.3-2.4h-2.4V9.8c0-.7.2-1.2 1.2-1.2h1.3V6.5c-.2 0-1-.1-1.9-.1-1.9 0-3.1 1.1-3.1 3.2v1.8H8.7v2.4h2.1V20z" fill="#fff"/></svg></div><div class="city">İstanbul · <span class="ago" data-i="0"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Salı akşamı sipariş verdim, perşembe sabahı kurye kapıdaydı. Kapıda ödedim, kutu mühürlüydü, her şey yolunda.”</p></div>
+      <div class="review"><div class="head"><div class="avatar" style="background:#12a150">M<img src="../../img/av/rv1.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Mehmet Y.</div><div class="city">Ankara · <span class="ago" data-i="1"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“İlk kez böyle sipariş veriyordum, ön ödeme isterler diye çekiniyordum. Burada öyle bir şey yok, ürün elinize geçince ödüyorsunuz. Danışman beş dakika içinde aradı, çok düzgün konuştu.”</p></div>
+      <div class="review"><div class="head"><div class="avatar" style="background:#f6a609">Z<img src="../../img/av/rv2.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Zeynep A.<svg class="src" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fd5"/><stop offset=".5" stop-color="#ff543e"/><stop offset="1" stop-color="#c837ab"/></linearGradient></defs><circle cx="12" cy="12" r="12" fill="url(#ig)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="15.4" cy="8.7" r=".9" fill="#fff"/></svg></div><div class="city">İzmir · <span class="ago" data-i="2"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Daha önce bir ilan sitesinden almıştım, kutuda ne mühür ne de prospektüs vardı. Burada kutu orijinal, parti numarası net okunuyor. Fark hemen belli oluyor.”</p></div>
+      <div class="review"><div class="head"><div class="avatar" style="background:#e5484d">M<img src="../../img/av/rv3.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Mustafa D.<svg class="src" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877f2"/><path d="M13.3 20v-6.2h2.1l.3-2.4h-2.4V9.8c0-.7.2-1.2 1.2-1.2h1.3V6.5c-.2 0-1-.1-1.9-.1-1.9 0-3.1 1.1-3.1 3.2v1.8H8.7v2.4h2.1V20z" fill="#fff"/></svg></div><div class="city">Bursa · <span class="ago" data-i="3"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★☆</div><p>“Teslimat üç gün sürdü, beklediğimden biraz uzun oldu ama kurye önceden aradı. Onun dışında diyecek bir şey yok, fiyat da diğer yerlerden uygun.”</p></div>
+      <div class="review"><div class="head"><div class="avatar" style="background:#7c3aed">E<img src="../../img/av/rv4.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Elif S.</div><div class="city">Antalya · <span class="ago" data-i="4"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Danışman bütün sorularımı sabırla yanıtladı, hiç ısrar etmedi. Sipariş onaylandı, kargo şubesinden aldım, ödemeyi orada yaptım.”</p></div>
+      <div class="review"><div class="head"><div class="avatar" style="background:#0891b2">A<img src="../../img/av/rv5.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Ahmet T.<svg class="src" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fd5"/><stop offset=".5" stop-color="#ff543e"/><stop offset="1" stop-color="#c837ab"/></linearGradient></defs><circle cx="12" cy="12" r="12" fill="url(#ig)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="15.4" cy="8.7" r=".9" fill="#fff"/></svg></div><div class="city">Konya · <span class="ago" data-i="5"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Benim için en önemlisi ödemeden önce paketi kurye önünde kontrol edebilmekti. Her şey siparişle aynıydı, kutu sağlamdı.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#1f6feb">E<img src="../../img/av/rv6.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Emine Ç.</div><div class="city">Adana · <span class="ago" data-i="6"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“İnternet kullanmayan annem için sipariş verdim. Danışman onu arayıp her şeyi ayarladı. Kargo iki günde geldi.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#12a150">A<img src="../../img/av/rv7.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Ali B.<svg class="src" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877f2"/><path d="M13.3 20v-6.2h2.1l.3-2.4h-2.4V9.8c0-.7.2-1.2 1.2-1.2h1.3V6.5c-.2 0-1-.1-1.9-.1-1.9 0-3.1 1.1-3.1 3.2v1.8H8.7v2.4h2.1V20z" fill="#fff"/></svg></div><div class="city">Gaziantep · <span class="ago" data-i="7"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Kampanya fiyatı gerçekten başka yerlerden uygun, üstelik ön ödeme yok. İkinci siparişim şimdiden yolda.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#f6a609">M<img src="../../img/av/rv8.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Merve Ö.<svg class="src" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fd5"/><stop offset=".5" stop-color="#ff543e"/><stop offset="1" stop-color="#c837ab"/></linearGradient></defs><circle cx="12" cy="12" r="12" fill="url(#ig)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="15.4" cy="8.7" r=".9" fill="#fff"/></svg></div><div class="city">Kayseri · <span class="ago" data-i="8"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★☆</div><p>“Hızlı ve sorunsuz. Tek eksik teslimat saatini seçememek, ama bu da mağazadan çok kargoyla ilgili sanırım.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#e5484d">H<img src="../../img/av/rv9.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Hüseyin G.</div><div class="city">Mersin · <span class="ago" data-i="9"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Kutunun üzerindeki parti numarasıyla blisterdekini karşılaştırdım, aynı çıktı. Doğrudan üreticiden geldiği belli.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#7c3aed">F<img src="../../img/av/rv10.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Fatma N.<svg class="src" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877f2"/><path d="M13.3 20v-6.2h2.1l.3-2.4h-2.4V9.8c0-.7.2-1.2 1.2-1.2h1.3V6.5c-.2 0-1-.1-1.9-.1-1.9 0-3.1 1.1-3.1 3.2v1.8H8.7v2.4h2.1V20z" fill="#fff"/></svg></div><div class="city">Samsun · <span class="ago" data-i="10"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Telefonda çok nazik konuştular, hiç baskı yok. Kurye iki iş gününde getirdi, teslimatta kartla ödedim.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#0891b2">E<img src="../../img/av/rv11.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Emre K.</div><div class="city">Kocaeli · <span class="ago" data-i="11"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Siparişi yarım dakikada verdim, birkaç dakika sonra aradılar, paket ertesi gün elimdeydi. Bu kadar hızlı olmasını beklemiyordum.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#1f6feb">Ö<img src="../../img/av/rv12.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Özlem V.<svg class="src" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fd5"/><stop offset=".5" stop-color="#ff543e"/><stop offset="1" stop-color="#c837ab"/></linearGradient></defs><circle cx="12" cy="12" r="12" fill="url(#ig)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="15.4" cy="8.7" r=".9" fill="#fff"/></svg></div><div class="city">Balıkesir · <span class="ago" data-i="12"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Benim için paketin gizli olması önemliydi, üzerinde içeriğe dair hiçbir şey yazmıyor. Kurye de tek soru sormadı.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#12a150">İ<img src="../../img/av/rv13.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">İbrahim U.<svg class="src" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877f2"/><path d="M13.3 20v-6.2h2.1l.3-2.4h-2.4V9.8c0-.7.2-1.2 1.2-1.2h1.3V6.5c-.2 0-1-.1-1.9-.1-1.9 0-3.1 1.1-3.1 3.2v1.8H8.7v2.4h2.1V20z" fill="#fff"/></svg></div><div class="city">Diyarbakır · <span class="ago" data-i="13"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★☆</div><p>“Her şey tamam, ürün orijinal, teslimat iki gün. Dört yıldız vermemin tek sebebi, söylenen on beş dakika yerine yirmi dakika sonra aramaları.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#f6a609">B<img src="../../img/av/rv14.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Büşra E.</div><div class="city">Manisa · <span class="ago" data-i="14"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Birkaç yerde fiyatlara baktım, en uygunu burasıydı. Üstelik risk yok, çünkü parayı teslimatta veriyorum. Hemen iki kutu aldım.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#e5484d">Y<img src="../../img/av/rv15.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Yusuf M.<svg class="src" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fd5"/><stop offset=".5" stop-color="#ff543e"/><stop offset="1" stop-color="#c837ab"/></linearGradient></defs><circle cx="12" cy="12" r="12" fill="url(#ig)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.4" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="15.4" cy="8.7" r=".9" fill="#fff"/></svg></div><div class="city">Şanlıurfa · <span class="ago" data-i="15"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“İnternetten alışverişi pek sevmem ama burada her şey basit: ad, telefon, sizi arıyorlar, getiriyorlar, ödüyorsunuz. Uğraştırmadılar.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#7c3aed">S<img src="../../img/av/rv16.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Selin H.<svg class="src" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1877f2"/><path d="M13.3 20v-6.2h2.1l.3-2.4h-2.4V9.8c0-.7.2-1.2 1.2-1.2h1.3V6.5c-.2 0-1-.1-1.9-.1-1.9 0-3.1 1.1-3.1 3.2v1.8H8.7v2.4h2.1V20z" fill="#fff"/></svg></div><div class="city">Van · <span class="ago" data-i="16"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Kutuda üretici mührü var, prospektüs Türkçe, son kullanma tarihi net okunuyor. Bir taklitle kötü bir deneyim yaşadıktan sonra bu benim için önemli.”</p></div>
+      <div class="review hid"><div class="head"><div class="avatar" style="background:#0891b2">M<img src="../../img/av/rv17.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div><div class="name">Murat Ş.</div><div class="city">Aydın · <span class="ago" data-i="17"></span></div></div><span class="verified">✔ doğrulanmış satın alma</span></div><div class="stars">★★★★★</div><p>“Ciddi bir mağaza. Danışman adresi onayladı, kurye kararlaştırılan gün geldi. Sürpriz yok.”</p></div>
+    </div>
+    <button class="btn rv-more" id="rvMore" type="button">Daha fazla görüş göster</button>
+  </div>
+</section>
+<!--/REVIEWS-->
+
+<!-- ============ FAQ ============ -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="center">Sık sorulan sorular</h2>
+    <div class="faq">
+      <div class="q open"><button>AlfaPro full® ürününü başka bir yerden daha ucuza alabilir miyim?<span class="chev">▾</span></button><div class="ans" style="max-height:400px"><div class="ans-inner">Bu site tek doğrudan satış noktasıdır. Başka yerlerdeki ilanlar ya yeniden satış ya da taklittir; üretici bunların içeriğinden ve kalitesinden sorumlu değildir.</div></div></div>
+      <div class="q"><button>Kargo ne zaman gelir?<span class="chev">▾</span></button><div class="ans"><div class="ans-inner">Kurye Türkiye genelinde genellikle 1-3 iş günü içinde teslim eder. Danışman teslimat gününü telefonda onaylar.</div></div></div>
+      <div class="q"><button>Ön ödeme yapmam gerekiyor mu?<span class="chev">▾</span></button><div class="ans"><div class="ans-inner">Hayır. Ödeme yalnızca teslimatta yapılır — paketi kontrol ettikten sonra kuryeye nakit veya kartla.</div></div></div>
+      <div class="q"><button>Vazgeçersem ne olur?<span class="chev">▾</span></button><div class="ans"><div class="ans-inner">Paketi teslimat sırasında hiçbir ücret ödemeden reddedebilirsiniz.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL ORDER ============ -->
+<section class="section" id="order" style="padding-top:0">
+  <div class="wrap">
+    <div class="order">
+      <div class="order-grid">
+        <div>
+          <div class="eyebrow" style="color:#7fb0ff">Üreticinin tek resmî sitesi</div>
+          <h2>Orijinal AlfaPro full® siparişi</h2>
+          <p class="muted" style="font-size:14.5px">Formu doldurun: bir danışman birkaç dakika içinde sizi arayarak adresi ve teslimat gününü onaylar. Ön ödeme yoktur.</p>
+          <div class="price-box"><span class="price-new">990 TL</span><span class="price-old">1980 TL</span><span class="save-badge disc">-50%</span></div>
+          <ul class="perks">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Ödeme yalnızca teslimatta</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Ödemeden önce kontrol</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Gizli paketleme</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Telefonla onay</li>
+          </ul>
+        </div>
+        <div class="form-card">
+          <form class="order-form" autocomplete="on" novalidate>
+            <h3>Orijinal ürünü sipariş edin</h3>
+            <div class="sub">Formu doldurun: bir danışman birkaç dakika içinde sizi arayarak adresi ve teslimat gününü onaylar. Ön ödeme yoktur.</div>
+            <input class="inp" type="text" name="name" placeholder="Ad ve soyad" autocomplete="name">
+            <div class="phone-field"><span class="p48">🇹🇷 +90</span><input class="inp" type="tel" name="phone" placeholder="532 123 45 67" inputmode="numeric" autocomplete="tel"></div>
+            <p class="ph-err">Geçerli bir telefon numarası girin</p>
+            <input type="hidden" name="kw" value="tr-mc-alfapro">
+            <button class="btn btn-primary btn-cta" type="submit">ORİJİNALİNİ SİPARİŞ ET</button>
+            <p class="today-line">🛒 Bugün sipariş verenler <b class="todayN">—</b> kişi</p>
+            <p class="form-note">Ön ödeme yok · teslimatta kontrol edersiniz · 🔒 SSL şifreleme</p>
+          </form>
+          <div class="ok-msg"><div class="ok-big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <b>Teşekkürler! Siparişiniz alındı.</b><p class="ok-when"></p><p class="ok-keep">🔔 Telefonunuzu yakınınızda tutun ve aramayı yanıtlayın.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="legal"><b>Üreticiden doğrudan satış</b><br>Siparişler üreticinin resmî müşteri hizmetleri tarafından işlenir. Kişisel bilgiler yalnızca siparişin tamamlanması için kullanılır.</div>
+    <div class="links"><a href="../../privacy.html">Gizlilik</a><a href="../../terms.html">Koşullar</a><a href="../../kontakt.html">İletişim</a></div>
+    <p class="disclaimer">© 2026 AlfaPro full®. Takviye edici gıda. Dengeli beslenmenin ve sağlıklı yaşam biçiminin yerine geçmez. Yayımlanan görüşler müşterilere aittir.</p>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="sticky">
+  <div class="p">990 TL <small>1980 TL</small></div>
+  <a class="btn btn-primary btn-cta" href="#buy">ORİJİNALİNİ SİPARİŞ ET</a>
+</div>
+<div class="sold-toast" id="toast"><div class="av" id="toastAv">A</div><div id="toastTx"></div></div>
+
+<script>
+(function(){
+  var WORKER='https://pilot-leads.bnsshub.workers.dev', KW='tr-mc-alfapro', BTN='ORİJİNALİNİ SİPARİŞ ET';
+  if('-50%'==='') document.body.classList.add('free');
+  var qs=new URLSearchParams(location.search);
+  // click-id из трекера: основной параметр cid; запасные — субы сетей и gclid Google
+  var gclid='';['cid','sub5','sid5','sub_id_4','m','d5','subacc4','utm_content','gclid'].some(function(k){gclid=qs.get(k)||'';return !!gclid;});
+  try{ if(gclid) localStorage.setItem('gclid',gclid); else gclid=localStorage.getItem('gclid')||''; }catch(e){}
+  try{ navigator.sendBeacon(WORKER+'/hit', JSON.stringify({kw:KW,gclid:gclid,ref:document.referrer,q:location.search})); }catch(e){}
+
+  function rnd(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+
+  // --- таймер акции (сохраняется между перезагрузками в пределах сессии) ---
+  // таймер только при ПЕРВОМ визите на сайт (флаг на домен); при перезагрузке/другом товаре — плашка «цена закреплена»
+  var first=true; try{ first=!localStorage.getItem('lp_seen'); localStorage.setItem('lp_seen','1'); }catch(e){}
+  if(qs.get('reset')==='1'){ first=true; try{ localStorage.removeItem('lp_seen'); }catch(e){} }   // ?reset=1 — для проверки
+  var end=Date.now()+rnd(11,16)*60000;
+  if(!first){ document.getElementById('scarcity').style.display='none'; document.getElementById('kept').style.display='flex'; }
+  var tMin=document.getElementById('t-min'), tSec=document.getElementById('t-sec'), tMs=document.getElementById('t-ms');
+  function tick(){ var ms=Math.max(0,end-Date.now()), left=Math.floor(ms/1000);
+    tMin.textContent=String(Math.floor(left/60)).padStart(2,'0'); tSec.textContent=String(left%60).padStart(2,'0');
+    tMs.textContent=String(Math.floor((ms%1000)/10)).padStart(2,'0'); if(ms>0) requestAnimationFrame(tick); else { document.getElementById('scarcity').style.display='none'; document.getElementById('kept').style.display='flex'; } }
+  if(first) tick();
+
+  // --- остаток партии: стартует 38–57, убывает рывками в случайные моменты, с «pop»-анимацией и всплывашкой ---
+  var stock=rnd(38,57), stockMax=60, sn=document.getElementById('stockNum'), sn2=document.getElementById('stockNum2'), sb=document.getElementById('stockBar');
+  try{ var st=+localStorage.getItem('lp_stock'); if(st>6&&st<stock) stock=st; }catch(e){}   // остаток не растёт при перезагрузке
+  function rs(){ sn.textContent=stock; sn2.textContent=stock; sb.style.width=Math.max(6,(stock/stockMax)*100)+'%'; try{ localStorage.setItem('lp_stock',stock); }catch(e){} }
+  rs();
+  var L={"cc": "+90", "phMin": 10, "phMax": 10, "ph0": true, "fem": "(?!)", "t1m": "az önce sipariş verdi", "t1f": "az önce sipariş verdi", "t2m": "az önce 2 kutu sipariş verdi", "t2f": "az önce 2 kutu sipariş verdi", "agoMin": " dakika önce", "agoH": " saat önce", "agoY": "dün", "agoD": " gün önce", "names": ["Mehmet", "Ayşe", "Mustafa", "Fatma", "Ahmet", "Emine", "Ali", "Hatice", "Hüseyin", "Zeynep", "Hasan", "Elif", "İbrahim", "Merve", "Murat", "Özlem", "Emre", "Büşra", "Yusuf", "Selin"], "cities": ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Konya", "Adana", "Şanlıurfa", "Gaziantep", "Kocaeli", "Mersin", "Diyarbakır", "Hatay", "Manisa", "Kayseri", "Samsun", "Balıkesir", "Kahramanmaraş", "Van", "Aydın"]};   // локаль тостов/дат/телефона (генерится сборкой из i18n)
+  var NAMES=L.names, CITIES=L.cities;
+  var toast=document.getElementById('toast'), tAv=document.getElementById('toastAv'), tTx=document.getElementById('toastTx');
+  function drop(){
+    if(stock>6){
+      var d=Math.random()<.25?2:1; stock-=d; today+=d; rs(); rToday();
+      [sn,sn2].forEach(function(el){ el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); });
+      var n=NAMES[rnd(0,NAMES.length-1)], c=CITIES[rnd(0,CITIES.length-1)];
+      var f=L.fem.test?L.fem.test(n):new RegExp(L.fem).test(n);
+      tAv.textContent=n[0]; tTx.innerHTML='<b>'+n+'</b> ('+c+') '+(d>1?(f?L.t2f:L.t2m):(f?L.t1f:L.t1m));
+      toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); },3800);
+    }
+    setTimeout(drop, rnd(18,55)*1000);
+  }
+  setTimeout(drop, rnd(7,14)*1000);
+
+  // --- липкая кнопка: показывать, когда форма первого экрана вне видимости ---
+  var sticky=document.getElementById('sticky'), firstForm=document.querySelector('#buy .form-card');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ sticky.classList.toggle('on', !es[0].isIntersecting); },{threshold:.15}).observe(firstForm);
+  } else sticky.classList.add('on');
+
+  // --- FAQ ---
+  document.querySelectorAll('.q button').forEach(function(btn){
+    btn.addEventListener('click',function(){ var q=btn.parentElement, a=q.querySelector('.ans');
+      if(q.classList.contains('open')){ q.classList.remove('open'); a.style.maxHeight=null; }
+      else { q.classList.add('open'); a.style.maxHeight=a.scrollHeight+'px'; } });
+  });
+
+  // --- отзывы: сначала 6, остальные по кнопке ---
+  var more=document.getElementById('rvMore');
+  if(more){ var hid=document.querySelectorAll('.review.hid'); if(!hid.length) more.style.display='none';
+    more.addEventListener('click',function(){ hid.forEach(function(r){ r.classList.remove('hid'); }); more.style.display='none'; }); }
+
+  // --- отзывы: относительные даты (стабильные в рамках визита, свежие сверху)
+  var AGO=[14,42,96,180,260,420,1500,2100,2900,3300,4400,5300,6200,7400,8700,9900,11500,12800];
+  Array.prototype.forEach.call(document.querySelectorAll('.ago'),function(el){
+    var m=AGO[+el.getAttribute('data-i')]||9999, t;
+    if(m<60) t=m+L.agoMin; else if(m<1440) t=Math.round(m/60)+L.agoH;
+    else if(m<2880) t=L.agoY; else t=Math.round(m/1440)+L.agoD;
+    el.textContent=t;
+  });
+
+  // --- «сегодня заказали N»: растёт по часам суток и подрастает вместе с убыванием остатка
+  var today=17+new Date().getHours()*3+rnd(0,4);
+  function rToday(){ Array.prototype.forEach.call(document.querySelectorAll('.todayN'),function(el){ el.textContent=today; }); }
+  rToday();
+
+  // --- маска национального номера: код страны и допустимая длина берутся из локали (L.cc/L.phMin/L.phMax/L.ph0)
+  var CCD=L.cc.replace(/\D/g,'');
+  function phDigits(v){ var d=v.replace(/\D/g,''); if(d.slice(0,2+CCD.length)==='00'+CCD)d=d.slice(2+CCD.length); if(d.slice(0,CCD.length)===CCD&&d.length>L.phMax)d=d.slice(CCD.length); if(L.ph0&&d[0]==='0')d=d.slice(1); return d.slice(0,L.phMax); }
+  // группы по 3, но последняя не должна быть из одной цифры («664 123 456 7» → «664 123 4567»)
+  function phFmt(d){ var g=d.match(/\d{1,3}/g)||[]; if(g.length>1&&g[g.length-1].length===1){ g[g.length-2]+=g.pop(); } return g.join(' '); }
+  function phBad(d){ return d.length<L.phMin || new RegExp('^(\\d)\\1{'+(d.length-1)+'}$').test(d) || d==='123456789' || d==='987654321'; }
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=phone]'), function(ph){
+    ph.addEventListener('input', function(){ ph.value=phFmt(phDigits(ph.value)); ph.closest('.phone-field').classList.remove('bad'); ph.classList.remove('bad'); });
+  });
+
+  // --- «спасибо»: днём обещаем звонок ~15 минут, ночью (21:00–8:00) — завтра с 8:00 (?hour=N — для проверки)
+  var hh=qs.get('hour')!==null?+qs.get('hour'):new Date().getHours();
+  var whenTxt=(hh>=8&&hh<21)?'Bir danışman siparişi onaylamak için genellikle 15 dakika içinde Türkiye numarasından sizi arayacak.':'Bir danışman siparişi onaylamak için yarın 08:00'den itibaren sizi arayacak.';
+  Array.prototype.forEach.call(document.querySelectorAll('.ok-when'),function(el){ el.textContent=whenTxt; });
+
+  // --- формы → воркер (одна страница = одна сеть, маршрут по KW) ---
+  Array.prototype.forEach.call(document.querySelectorAll('form.order-form'), function(f){
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var nm=f.querySelector('[name=name]'), ph=f.querySelector('[name=phone]'), btn=f.querySelector('button'), ok=f.parentNode.querySelector('.ok-msg');
+      var dg=phDigits(ph.value);
+      var badN=nm.value.trim().length<2, badP=phBad(dg);
+      nm.classList.toggle('bad',badN); ph.classList.toggle('bad',badP);
+      ph.closest('.phone-field').classList.toggle('bad',badP);
+      if(badN||badP){ (badN?nm:ph).focus(); return; }
+      btn.disabled=true; btn.textContent='Gönderiliyor…';
+      var d={kw:KW,gclid:gclid,page:location.href,name:nm.value.trim(),phone:L.cc+' '+phFmt(dg)};
+      fetch(WORKER+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+        .then(function(r){return r.json();})
+        .then(function(){ f.style.display='none'; if(ok) ok.style.display='block'; sticky.classList.remove('on'); })
+        .catch(function(){ btn.disabled=false; btn.textContent=BTN; alert('Bağlantı hatası. Lütfen tekrar deneyin.'); });
+    });
+  });
+})();
+</script>
+</body>
+</html>
