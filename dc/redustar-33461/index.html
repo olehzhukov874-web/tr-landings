@@ -484,13 +484,18 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 
 <script>
 (function(){
-  var WORKER='https://pilot-leads.bnsshub.workers.dev', KW='tr-dc-redustar-33461', BTN='ORİJİNALİNİ SİPARİŞ ET';
+  var WORKER='https://pilot-leads.bnsshub.workers.dev', KW='tr-dc-redustar-33461', KEYWORD='redustar', BTN='ORİJİNALİNİ SİPARİŞ ET';
   if('-50%'==='') document.body.classList.add('free');
   var qs=new URLSearchParams(location.search);
   // click-id из трекера: основной параметр cid; запасные — субы сетей и gclid Google
-  var gclid='';['cid','sub5','sid5','sub_id_4','m','d5','subacc4','utm_content','gclid'].some(function(k){gclid=qs.get(k)||'';return !!gclid;});
+  var gclid='';['cid','sub5','sid5','sub_id_4','m','d5','subacc4','utm_content'].some(function(k){gclid=qs.get(k)||'';return !!gclid;});
+  var GCLID=qs.get('gclid')||'';   // метка Google Ads (автопометка) — уходит в ZTDS как параметр клика, cid-ом НЕ является
   try{ if(gclid) localStorage.setItem('gclid',gclid); else gclid=localStorage.getItem('gclid')||''; }catch(e){}
-  try{ navigator.sendBeacon(WORKER+'/hit', JSON.stringify({kw:KW,gclid:gclid,ref:document.referrer,q:location.search})); }catch(e){}
+  try{ var hitBody=JSON.stringify({kw:KW,keyword:KEYWORD,gclid:gclid,ads_gclid:GCLID,ref:document.referrer,q:location.search,page:location.href});
+  if(gclid){ navigator.sendBeacon(WORKER+'/hit', hitBody); }
+  else { fetch(WORKER+'/hit',{method:'POST',headers:{'Content-Type':'application/json'},body:hitBody})
+    .then(function(r){return r.json();}).then(function(j){ if(j&&j.cid){ gclid=j.cid; try{localStorage.setItem('gclid',gclid);}catch(e){} } }).catch(function(){}); }
+}catch(e){}
 
   function rnd(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
 
@@ -571,7 +576,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 
   // --- «спасибо»: днём обещаем звонок ~15 минут, ночью (21:00–8:00) — завтра с 8:00 (?hour=N — для проверки)
   var hh=qs.get('hour')!==null?+qs.get('hour'):new Date().getHours();
-  var whenTxt=(hh>=8&&hh<21)?'Bir danışman siparişi onaylamak için genellikle 15 dakika içinde Türkiye numarasından sizi arayacak.':'Bir danışman siparişi onaylamak için yarın 08:00'den itibaren sizi arayacak.';
+  var whenTxt=(hh>=8&&hh<21)?'Bir danışman siparişi onaylamak için genellikle 15 dakika içinde Türkiye numarasından sizi arayacak.':'Bir danışman siparişi onaylamak için yarın 08:00\'den itibaren sizi arayacak.';
   Array.prototype.forEach.call(document.querySelectorAll('.ok-when'),function(el){ el.textContent=whenTxt; });
 
   // --- формы → воркер (одна страница = одна сеть, маршрут по KW) ---
