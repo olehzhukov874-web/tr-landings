@@ -490,11 +490,14 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   // click-id из трекера: основной параметр cid; запасные — субы сетей и gclid Google
   var gclid='';['cid','sub5','sid5','sub_id_4','m','d5','subacc4','utm_content'].some(function(k){gclid=qs.get(k)||'';return !!gclid;});
   var GCLID=qs.get('gclid')||'';   // метка Google Ads (автопометка) — уходит в ZTDS как параметр клика, cid-ом НЕ является
-  try{ if(gclid) localStorage.setItem('gclid',gclid); else gclid=localStorage.getItem('gclid')||''; }catch(e){}
+  // кеш cid: ztds_cid + ztds_src (gclid Ads, при котором cid выдан). Новый gclid ≠ сохранённого — старый cid не берём, идём за новым через /hit
+  function cidSave(){ try{ localStorage.setItem('ztds_cid',gclid); localStorage.setItem('ztds_src',GCLID); }catch(e){} }
+  try{ if(gclid) cidSave(); else { var sc=localStorage.getItem('ztds_cid')||'', ss=localStorage.getItem('ztds_src')||''; if(sc&&(!GCLID||GCLID===ss)) gclid=sc; } }catch(e){}
+  var hitP=null;   // ожидание cid от /hit — форма ждёт его до 1.5 с, чтобы лид ушёл с cid
   try{ var hitBody=JSON.stringify({kw:KW,keyword:KEYWORD,gclid:gclid,ads_gclid:GCLID,ref:document.referrer,q:location.search,page:location.href});
   if(gclid){ navigator.sendBeacon(WORKER+'/hit', hitBody); }
-  else { fetch(WORKER+'/hit',{method:'POST',headers:{'Content-Type':'application/json'},body:hitBody})
-    .then(function(r){return r.json();}).then(function(j){ if(j&&j.cid){ gclid=j.cid; try{localStorage.setItem('gclid',gclid);}catch(e){} } }).catch(function(){}); }
+  else { hitP=fetch(WORKER+'/hit',{method:'POST',headers:{'Content-Type':'application/json'},body:hitBody})
+    .then(function(r){return r.json();}).then(function(j){ if(j&&j.cid){ gclid=j.cid; cidSave(); } return gclid; }).catch(function(){ return ''; }); }
 }catch(e){}
 
   function rnd(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
@@ -590,11 +593,13 @@ body.free .disc,body:not(.free) .nodisc{display:none}
       ph.closest('.phone-field').classList.toggle('bad',badP);
       if(badN||badP){ (badN?nm:ph).focus(); return; }
       btn.disabled=true; btn.textContent='Gönderiliyor…';
-      var d={kw:KW,gclid:gclid,page:location.href,name:nm.value.trim(),phone:L.cc+' '+phFmt(dg)};
-      fetch(WORKER+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
-        .then(function(r){return r.json();})
-        .then(function(){ f.style.display='none'; if(ok) ok.style.display='block'; sticky.classList.remove('on'); })
-        .catch(function(){ btn.disabled=false; btn.textContent=BTN; alert('Bağlantı hatası. Lütfen tekrar deneyin.'); });
+      var d={kw:KW,page:location.href,name:nm.value.trim(),phone:L.cc+' '+phFmt(dg)};
+      function send(){ d.gclid=gclid;
+        fetch(WORKER+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+          .then(function(r){return r.json();})
+          .then(function(){ f.style.display='none'; if(ok) ok.style.display='block'; sticky.classList.remove('on'); })
+          .catch(function(){ btn.disabled=false; btn.textContent=BTN; alert('Bağlantı hatası. Lütfen tekrar deneyin.'); }); }
+      if(!gclid&&hitP){ Promise.race([hitP,new Promise(function(r){setTimeout(r,1500);})]).then(send,send); } else send();
     });
   });
 })();
