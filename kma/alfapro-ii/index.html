@@ -102,8 +102,11 @@ header.top{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92);
 .review .reply b{display:block; font-size:11.5px; color:var(--muted); margin-bottom:2px}
 /* медальоны-«печати» (v4.1) */
 .medals{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:14px 0 0}
-@media(max-width:860px){.medals{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:520px){.medals{grid-template-columns:repeat(2,1fr)} .medals .medal:nth-child(5){grid-column:1/-1}}
+@media(max-width:860px){.medals{gap:7px}
+  .medal{padding:9px 4px 8px} .medal svg{width:42px; height:42px} .medal.flag .fl{font-size:20px; line-height:42px; height:42px; top:9px}
+  .medal b{font-size:9.5px; letter-spacing:0}}
+@media(max-width:400px){.medals{gap:5px} .medal svg{width:34px; height:34px}
+  .medal.flag .fl{font-size:17px; line-height:34px; height:34px} .medal b{font-size:8.5px}}
 .medal.flag{position:relative}
 .medal.flag .fl{position:absolute; top:12px; left:50%; transform:translateX(-50%); font-size:26px; line-height:54px; height:54px; display:block; filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
 .medal{display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px; background:#fff; border:1px solid #f1e3b8; border-radius:14px; padding:12px 8px 10px; box-shadow:0 4px 14px rgba(185,137,0,.10)}
@@ -111,35 +114,24 @@ header.top{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92);
 .medal b{font-size:12px; line-height:1.25; color:var(--gold-dark); letter-spacing:.02em; text-transform:uppercase}
 .medal b:empty{display:none}
 /* бумаги-сертификаты (v4.1) */
-.certs{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0 0}
+.certs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:14px auto 0; max-width:500px}
+@media(max-width:640px){.certs{gap:8px; max-width:300px}}
 .cert{position:relative; padding:0; border:none; background:#fdfaf3; border-radius:6px; overflow:hidden; cursor:zoom-in;
   box-shadow:0 6px 18px rgba(15,27,45,.14); aspect-ratio:2/3; font-family:inherit; display:block; width:100%}
 .cert img{width:100%; height:100%; object-fit:cover; display:block}
-.cert .txt{position:absolute; inset:8% 11% 26%; display:flex; flex-direction:column; align-items:center; text-align:center;
+.cert .txt{position:absolute; inset:7% 9% 30%; display:flex; flex-direction:column; align-items:center; text-align:center;
   color:#3a2c14; font-family:Georgia,"Times New Roman",serif}
 .cert .flag{font-size:clamp(14px,3.4vw,20px); line-height:1; margin-bottom:4px}
 .cert .t{font-size:clamp(8px,1.9vw,11px); font-weight:700; letter-spacing:.05em; text-transform:uppercase; line-height:1.25}
 .cert .rule{width:38%; height:1px; background:#b98900; opacity:.6; margin:5px 0 6px}
-.cert .p{font-size:clamp(6.4px,1.45vw,8.4px); line-height:1.45; color:#4a3a1c}
-.cert .prod{margin-top:auto; font-size:clamp(7px,1.6vw,9px); font-weight:700; font-style:italic; color:#6b4f14}
+.cert .p{font-size:clamp(6px,1.35vw,8px); line-height:1.4; color:#4a3a1c; overflow:hidden}
+.cert .prod{margin-top:auto; font-size:clamp(6.5px,1.4vw,8.5px); font-weight:700; font-style:italic; color:#6b4f14;
+  max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .cert-lb{position:fixed; inset:0; z-index:120; background:rgba(10,16,26,.82); display:grid; place-items:center; padding:18px}
 .cert-lb[hidden]{display:none}
 .cert-lb .cert{max-width:min(420px,86vw); cursor:default; box-shadow:0 24px 60px rgba(0,0,0,.5)}
 .cert-x{position:absolute; top:14px; right:16px; width:40px; height:40px; border:none; border-radius:50%;
   background:rgba(255,255,255,.9); font-size:24px; line-height:1; cursor:pointer; color:#0f1b2d}
-/* диаграмма цены (v4.1) */
-.hero-grid>.pricebars{grid-column:1}
-@media(max-width:860px){.hero-grid>.pricebars{order:4}}
-.pricebars{display:grid; grid-template-columns:1fr 1fr auto; align-items:end; gap:14px; margin:12px 4px 0; padding:12px 14px 10px; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow)}
-.pricebars .bar{display:flex; flex-direction:column; align-items:center; gap:4px; height:118px; justify-content:flex-end}
-.pricebars .bar i{display:block; width:100%; max-width:64px; border-radius:8px 8px 3px 3px; background:linear-gradient(180deg,#c9d2de,#9aa8b8); transition:height .6s ease}
-.pricebars .bar.now i{background:linear-gradient(180deg,var(--ok),#0b7a3b)}
-.pricebars .bar em{font-style:normal; font-weight:800; font-size:14px; letter-spacing:-.02em}
-.pricebars .bar.old em{color:var(--muted); text-decoration:line-through}
-.pricebars .bar.now em{color:var(--ok); font-size:16px}
-.pricebars .bar span{font-size:11px; color:var(--muted); line-height:1.2; text-align:center}
-.pricebars .bar-save{align-self:center; background:var(--danger-bg); color:var(--danger); font-weight:800; font-size:14px; padding:6px 10px; border-radius:9px}
-.free .pricebars{display:none}
 @media(max-width:640px){h1{font-size:22px} .pill{font-size:11px; padding:5px 9px} .badges-row{gap:5px; margin-bottom:8px} .pricenote{display:none} .form-card .sub{display:none} .price-box{margin:8px 0 10px} .price-new{font-size:34px}}
 
 /* form card */
@@ -320,11 +312,6 @@ body.free .disc,body:not(.free) .nodisc{display:none}
           <img src="../../img/kmahd-9815.webp" alt="Alfapro II" width="600" height="601" fetchpriority="high" decoding="async">
           <div><span class="ribbon">Orijinal</span><div class="shotcap">Kuryenin getireceği orijinal kutu budur: mühür, parti numarası, son kullanma tarihi.</div></div>
         </div>
-      </div>
-      <div class="pricebars disc">
-        <div class="bar old"><i style="height:100%"></i><em>1178 TL</em><span>Normal fiyat</span></div>
-        <div class="bar now"><i style="height:50%"></i><em>589 TL</em><span>Bugün burada</span></div>
-        <div class="bar-save">-50%</div>
       </div>
         <div class="scarcity" id="scarcity">
           <div class="left">
