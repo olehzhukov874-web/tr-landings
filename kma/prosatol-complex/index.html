@@ -143,6 +143,7 @@ header.top{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92);
 .inp:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(31,111,235,.12)}
 .inp.bad{border-color:var(--danger); box-shadow:0 0 0 4px rgba(229,72,77,.12)}
 .phone-field{display:flex; gap:8px; margin-bottom:10px}
+select.cty{appearance:auto; background:#fff; font-weight:600; color:var(--ink)}
 .phone-field .inp{margin-bottom:0; flex:1; min-width:0}
 .phone-field .p48{flex:none; display:flex; align-items:center; gap:4px; font-weight:800; font-size:15px; color:var(--ink); background:var(--bg-soft); border:1.5px solid #cfd8e3; border-radius:12px; padding:0 12px}
 .ph-err{display:none; font-size:12.5px; color:var(--danger); font-weight:600; margin:-4px 0 8px 2px}
@@ -309,7 +310,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
       <div>
         <div class="product-card">
           <span class="disc-ribbon disc">-50%</span>
-          <img src="../../img/kmahd-11709.webp" alt="Prosatol Complex" width="640" height="633" fetchpriority="high" decoding="async">
+          <img src="../../img/alt3-kmahd-11709.webp" alt="Prosatol Complex" width="560" height="560" fetchpriority="high" decoding="async">
           <div><span class="ribbon">Orijinal</span><div class="shotcap">Kuryenin getireceği orijinal kutu budur: mühür, parti numarası, son kullanma tarihi.</div></div>
         </div>
       </div>
@@ -701,6 +702,20 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 
   // --- маска национального номера: код страны и допустимая длина берутся из локали (L.cc/L.phMin/L.phMax/L.ph0)
   var CCD=L.cc.replace(/\D/g,'');
+  // --- RUEU: страна выбирается в форме — меняет код телефона, длину номера и цену (список стран подставляет сборка)
+  var CTY={}, CTYSEL=null;
+  function setCountry(cc){ var c=CTY[cc]; if(!c) return; CTYSEL=cc; L.cc=c.cc; L.phMin=c.phMin; L.phMax=c.phMax; L.ph0=c.ph0; CCD=c.cc.replace(/\D/g,'');
+    Array.prototype.forEach.call(document.querySelectorAll('.p48'),function(el){ el.textContent=c.flag+' '+c.cc; });
+    Array.prototype.forEach.call(document.querySelectorAll('.price-new'),function(el){ el.textContent=c.price; });
+    Array.prototype.forEach.call(document.querySelectorAll('.price-old'),function(el){ el.textContent=c.old; });
+    Array.prototype.forEach.call(document.querySelectorAll('.order .p'),function(el){ if(el.firstChild) el.firstChild.nodeValue=c.price+' '; });
+    Array.prototype.forEach.call(document.querySelectorAll('.save-abs'),function(el){ el.style.display='none'; });
+    Array.prototype.forEach.call(document.querySelectorAll('select.cty'),function(el){ el.value=cc; });
+    try{ localStorage.setItem('lp_cty',cc); }catch(e){} }
+  if(Object.keys(CTY).length){ var cty0=null; try{ cty0=localStorage.getItem('lp_cty'); }catch(e){}
+    var qcc=(qs.get('cc')||'').toUpperCase(); setCountry(CTY[qcc]?qcc:(CTY[cty0]?cty0:Object.keys(CTY)[0]));
+    Array.prototype.forEach.call(document.querySelectorAll('select.cty'),function(el){ el.addEventListener('change',function(){ setCountry(el.value);
+      Array.prototype.forEach.call(document.querySelectorAll('input[name=phone]'),function(ph){ ph.value=''; }); }); }); }
   function phDigits(v){ var d=v.replace(/\D/g,''); if(d.slice(0,2+CCD.length)==='00'+CCD)d=d.slice(2+CCD.length); if(d.slice(0,CCD.length)===CCD&&d.length>L.phMax)d=d.slice(CCD.length); if(L.ph0&&d[0]==='0')d=d.slice(1); return d.slice(0,L.phMax); }
   // группы по 3, но последняя не должна быть из одной цифры («664 123 456 7» → «664 123 4567»)
   function phFmt(d){ var g=d.match(/\d{1,3}/g)||[]; if(g.length>1&&g[g.length-1].length===1){ g[g.length-2]+=g.pop(); } return g.join(' '); }
@@ -729,6 +744,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
       if(badN||badP){ (badN?nm:ph).focus(); return; }
       btn.disabled=true; btn.textContent='Gönderiliyor…';
       var d={kw:KW,page:location.href,name:nm.value.trim(),phone:L.cc+' '+phFmt(dg)};
+      if(CTYSEL) d.country=CTYSEL;
       function send(){ d.gclid=gclid;
         fetch(WORKER+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
           .then(function(r){return r.json();})
