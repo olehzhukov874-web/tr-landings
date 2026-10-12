@@ -22,7 +22,8 @@
     .then(function(r){return r.json();})
     .then(function(j){
       if(done) return;
-      if(j&&j.path){ done=true; location.replace(j.path+(j.cid?'?cid='+encodeURIComponent(j.cid):'')); }
+      // 12.10: &ctype= (версия креативов) доезжает до страницы вместе с cid — страница отдаёт его в /hit и /lead
+      if(j&&j.path){ done=true; var ct=p.get('ctype')||''; location.replace(j.path+(j.cid?'?cid='+encodeURIComponent(j.cid):'')+(ct?(j.cid?'&':'?')+'ctype='+encodeURIComponent(ct):'')); }
       else show();
     }).catch(show);
 }catch(e){}})();
