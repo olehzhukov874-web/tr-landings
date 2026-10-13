@@ -317,6 +317,8 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 /* 13.10: липкая кнопка заказа на телефоне — показывается, когда обе формы вне экрана; после отправки лида убирается */
 .sticky-cta .p{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .sticky-cta.off{display:none!important}
+/* 13.10: на телефоне верхнюю полосу «официальный сайт · оплата при получении» не показываем (решение пользователя) — экономит первый экран */
+@media(max-width:820px){.topbar{display:none}}
 </style>
 </head>
 <body>
