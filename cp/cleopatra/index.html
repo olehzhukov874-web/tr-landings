@@ -299,6 +299,24 @@ footer .links{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:10px}
 footer a{text-decoration:none; font-weight:600}
 .disclaimer{font-size:12px; color:#8493a8}
 body.free .disc,body:not(.free) .nodisc{display:none}
+/* 13.10: мобильный первый экран — заголовок и цена выше фото, фото компактнее, форма сразу под ним (display:contents раскладывает #buy по сетке) */
+@media(max-width:860px){
+  .hero-grid>#buy{display:contents}
+  .hero-grid>#buy>h1{order:1; margin:0 0 4px}
+  .hero-grid>#buy>.price-box{order:2; margin:0 0 4px}
+  .hero-grid>#buy>.pricenote{order:2}
+  .hero-grid>div:first-child{order:3}
+  .hero-grid>#buy>.form-card{order:4}
+  .hero-grid>#buy>.sig{order:5}
+  .hero-grid>#buy>.fake-hint{order:6}
+  .hero-grid>.scarcity{order:7}
+  .hero-grid{gap:10px}
+  .product-card{padding:8px 10px 8px} .product-card img{max-height:200px; margin:2px auto 4px} .product-card .ribbon{font-size:12px; padding:5px 10px}
+  .shotcap{display:none}
+}
+/* 13.10: липкая кнопка заказа на телефоне — показывается, когда обе формы вне экрана; после отправки лида убирается */
+.sticky-cta .p{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.sticky-cta.off{display:none!important}
 </style>
 </head>
 <body>
@@ -588,6 +606,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   </div>
 </section>
 
+<div class="sticky-cta" id="stickyCta"><div class="p">990 TL<small>1980 TL</small></div><a class="btn btn-primary" href="#buy" id="stickyBtn">ORİJİNALİNİ SİPARİŞ ET</a></div>
 <footer>
   <div class="wrap">
     <div class="legal"><b>Üreticiden doğrudan satış</b><br>Siparişler üreticinin resmî müşteri hizmetleri tarafından işlenir. Kişisel bilgiler yalnızca siparişin tamamlanması için kullanılır.</div>
@@ -601,6 +620,13 @@ body.free .disc,body:not(.free) .nodisc{display:none}
 (function(){
   var WORKER='https://pilot-leads.bnsshub.workers.dev', KW='tr-cp-cleopatra', KEYWORD='cleopatra', BTN='ORİJİNALİNİ SİPARİŞ ET';
   if('-50%'==='') document.body.classList.add('free');
+  // 13.10: одна отправка на страницу — после успеха прячем ОБЕ формы, помним сутки в localStorage (повтор из второй формы/после перезагрузки давал 7% дублей)
+  var SENT_KEY='lp_sent_'+KW, sending=false;
+  function markSent(){ document.body.classList.add('sent');
+    Array.prototype.forEach.call(document.querySelectorAll('form.order-form'),function(f){ f.style.display='none'; });
+    Array.prototype.forEach.call(document.querySelectorAll('.ok-msg'),function(o){ o.style.display='block'; });
+    var st=document.getElementById('stickyCta'); if(st){ st.classList.remove('on'); st.classList.add('off'); }
+    try{ localStorage.setItem(SENT_KEY, String(Date.now())); }catch(e){} }
   var qs=new URLSearchParams(location.search);
   // click-id из трекера: основной параметр cid; запасные — субы сетей и gclid Google
   var gclid='';['cid','sub5','sid5','sub_id_4','m','d5','subacc4','utm_content'].some(function(k){gclid=qs.get(k)||'';return !!gclid;});
@@ -622,7 +648,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   // --- таймер акции (сохраняется между перезагрузками в пределах сессии) ---
   // таймер только при ПЕРВОМ визите на сайт (флаг на домен); при перезагрузке/другом товаре — плашка «цена закреплена»
   var first=true; try{ first=!localStorage.getItem('lp_seen'); localStorage.setItem('lp_seen','1'); }catch(e){}
-  if(qs.get('reset')==='1'){ first=true; try{ localStorage.removeItem('lp_seen'); }catch(e){} }   // ?reset=1 — для проверки
+  if(qs.get('reset')==='1'){ first=true; try{ localStorage.removeItem('lp_seen'); localStorage.removeItem(SENT_KEY); }catch(e){} }   // ?reset=1 — для проверки
   // v4 (12.09): таймер убран — скидка «держится, пока страница открыта»; при повторном визите — блок «мы сохранили вам цену»
   if(!first){ document.getElementById('scarcity').style.display='none'; document.getElementById('kept').style.display='flex'; }
 
@@ -699,6 +725,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
     Array.prototype.forEach.call(document.querySelectorAll('.price-old'),function(el){ el.textContent=c.old; });
     Array.prototype.forEach.call(document.querySelectorAll('.order .p'),function(el){ if(el.firstChild) el.firstChild.nodeValue=c.price+' '; });
     Array.prototype.forEach.call(document.querySelectorAll('.save-abs'),function(el){ el.style.display='none'; });
+    var sp=document.querySelector('#stickyCta .p'); if(sp&&sp.firstChild){ sp.firstChild.nodeValue=c.price; var sm=sp.querySelector('small'); if(sm) sm.textContent=c.old||''; }
     Array.prototype.forEach.call(document.querySelectorAll('select.cty'),function(el){ el.value=cc; });
     try{ localStorage.setItem('lp_cty',cc); }catch(e){} }
   if(Object.keys(CTY).length){ var cty0=null; try{ cty0=localStorage.getItem('lp_cty'); }catch(e){}
@@ -731,17 +758,31 @@ body.free .disc,body:not(.free) .nodisc{display:none}
       nm.classList.toggle('bad',badN); ph.classList.toggle('bad',badP);
       ph.closest('.phone-field').classList.toggle('bad',badP);
       if(badN||badP){ (badN?nm:ph).focus(); return; }
+      if(sending) return; sending=true;
       btn.disabled=true; btn.textContent='Gönderiliyor…';
       var d={kw:KW,page:location.href,name:nm.value.trim(),phone:L.cc+' '+phFmt(dg),ctype:CTYPE};
       if(CTYSEL) d.country=CTYSEL;
       function send(){ d.gclid=gclid;
         fetch(WORKER+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
           .then(function(r){return r.json();})
-          .then(function(){ f.style.display='none'; if(ok) ok.style.display='block'; })
-          .catch(function(){ btn.disabled=false; btn.textContent=BTN; alert('Bağlantı hatası. Lütfen tekrar deneyin.'); }); }
-      if(!gclid&&hitP){ Promise.race([hitP,new Promise(function(r){setTimeout(r,1500);})]).then(send,send); } else send();
+          .then(function(){ markSent(); })
+          .catch(function(){ sending=false; btn.disabled=false; btn.textContent=BTN; alert('Bağlantı hatası. Lütfen tekrar deneyin.'); }); }
+      if(!gclid&&hitP){ Promise.race([hitP,new Promise(function(r){setTimeout(r,3000);})]).then(send,send); } else send();   // 13.10: ждём cid до 3 с (было 1.5 — 44 лида из 1174 уходили без cid)
     });
   });
+
+  // 13.10: лид с этой страницы уже уходил менее суток назад — сразу показываем «спасибо», форму не даём (воркер такой повтор всё равно не отправит)
+  try{ var sentAt=+localStorage.getItem(SENT_KEY)||0; if(sentAt&&Date.now()-sentAt<86400000) markSent(); }catch(e){}
+
+  // 13.10: липкая кнопка (только телефон, см. CSS) — видна, когда ни одна форма не на экране; ведёт к форме в шапке
+  var sticky=document.getElementById('stickyCta'), cards=Array.prototype.slice.call(document.querySelectorAll('.form-card'));
+  if(sticky&&cards.length&&'IntersectionObserver' in window&&!document.body.classList.contains('sent')){
+    var visible={}; var io=new IntersectionObserver(function(ens){ ens.forEach(function(en){ visible[cards.indexOf(en.target)]=en.isIntersecting; });
+      var any=cards.some(function(c,i){ return visible[i]; }); sticky.classList.toggle('on', !any&&!document.body.classList.contains('sent')); },{threshold:0.1});
+    cards.forEach(function(c){ io.observe(c); });
+    sticky.querySelector('a').addEventListener('click',function(ev){ ev.preventDefault(); cards[0].scrollIntoView({behavior:'smooth',block:'center'});
+      setTimeout(function(){ var i=cards[0].querySelector('[name=name]'); if(i) try{ i.focus({preventScroll:true}); }catch(e){} },600); });
+  }
 })();
 </script>
 </body>
