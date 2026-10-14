@@ -389,7 +389,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
             <p class="phonewhy">Numara onay araması için gerekli. Yalnızca satıcı, sipariş onay servisi ve kuryeyle paylaşılır.</p>
             <input type="hidden" name="kw" value="tr-kma-imperium-spray">
             <button class="btn btn-primary btn-cta" type="submit">ORİJİNALİNİ SİPARİŞ ET</button>
-            <p class="today-line">🛒 Bugün sipariş verenler <b class="todayN">—</b> kişi</p>
+            <p class="today-line">🛒 Bugün sipariş verenler: <b class="todayN">—</b> kişi</p>
             <p class="form-note">Ön ödeme yok · teslimatta kontrol edersiniz · 🔒 SSL şifreleme</p>
           </form>
           <div class="ok-msg"><div class="ok-big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
@@ -690,7 +690,7 @@ body.free .disc,body:not(.free) .nodisc{display:none}
             <p class="phonewhy">Numara onay araması için gerekli. Yalnızca satıcı, sipariş onay servisi ve kuryeyle paylaşılır.</p>
             <input type="hidden" name="kw" value="tr-kma-imperium-spray">
             <button class="btn btn-primary btn-cta" type="submit">ORİJİNALİNİ SİPARİŞ ET</button>
-            <p class="today-line">🛒 Bugün sipariş verenler <b class="todayN">—</b> kişi</p>
+            <p class="today-line">🛒 Bugün sipariş verenler: <b class="todayN">—</b> kişi</p>
             <p class="form-note">Ön ödeme yok · teslimatta kontrol edersiniz · 🔒 SSL şifreleme</p>
           </form>
           <div class="ok-msg"><div class="ok-big"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
@@ -799,8 +799,9 @@ body.free .disc,body:not(.free) .nodisc{display:none}
   var AGO=[14,42,96,180,260,420];   // первые шесть — свежие, дальше растёт плавно (отзывов теперь 72)
   Array.prototype.forEach.call(document.querySelectorAll('.ago'),function(el){
     var i=+el.getAttribute('data-i'), m=(i<AGO.length?AGO[i]:Math.round(600+i*i*3.2+i*180)), t;
-    if(m<60) t=m+L.agoMin; else if(m<1440) t=Math.round(m/60)+L.agoH;
-    else if(m<2880) t=L.agoY; else t=Math.round(m/1440)+L.agoD;
+    var agoF=function(n,s){return s.indexOf('{n}')>=0?s.replace('{n}',n):n+s;};   // «vor {n} Min.» / «{n} min temu»
+    if(m<60) t=agoF(m,L.agoMin); else if(m<1440) t=agoF(Math.round(m/60),L.agoH);
+    else if(m<2880) t=L.agoY; else t=agoF(Math.round(m/1440),L.agoD);
     el.textContent=t;
   });
 
