@@ -158,7 +158,8 @@ select.cty{appearance:auto; background:#fff; font-weight:600; color:var(--ink)}
 .phone-field .inp{margin-bottom:0; flex:1; min-width:0}
 .phone-field .p48{flex:none; display:flex; align-items:center; gap:4px; font-weight:800; font-size:15px; color:var(--ink); background:var(--bg-soft); border:1.5px solid #cfd8e3; border-radius:12px; padding:0 12px}
 .ph-err{display:none; font-size:12.5px; color:var(--danger); font-weight:600; margin:-4px 0 8px 2px}
-.phone-field.bad+ .ph-err{display:block}
+.phone-field.warn+ .ph-err{display:block;color:#b7791f}
+.phone-field.bad+ .ph-err{display:block;color:var(--danger)}
 .form-card .btn{width:100%; font-size:18px; padding:17px}
 .form-note{font-size:12.5px; color:var(--muted); text-align:center; margin:8px 0 0}
 .today-line{font-size:13px; font-weight:700; color:var(--ok); text-align:center; margin:10px 0 0}
@@ -815,12 +816,39 @@ body.free .disc,body:not(.free) .nodisc{display:none}
     var qcc=(qs.get('cc')||'').toUpperCase(); setCountry(CTY[qcc]?qcc:(CTY[cty0]?cty0:Object.keys(CTY)[0]));
     Array.prototype.forEach.call(document.querySelectorAll('select.cty'),function(el){ el.addEventListener('change',function(){ setCountry(el.value);
       Array.prototype.forEach.call(document.querySelectorAll('input[name=phone]'),function(ph){ ph.value=''; }); }); }); }
-  function phDigits(v){ var d=v.replace(/\D/g,''); if(d.slice(0,2+CCD.length)==='00'+CCD)d=d.slice(2+CCD.length); if(d.slice(0,CCD.length)===CCD&&d.length>L.phMax)d=d.slice(CCD.length); if(L.ph0&&d[0]==='0')d=d.slice(1); return d.slice(0,L.phMax); }
+  // 14.10: проверка номера «чтобы не терять заказы». 1) Нормализация без потери цифр: 00+код, повторённый код страны («43 664…» при
+  // широком окне длины AT/DE/IT — только если дальше идёт мобильная цифра), междугородный префикс (0; у Венгрии 06, у России/Казахстана 8,
+  // у Беларуси 80) снимается лишь когда номер набран целиком, а до того держится в поле — раньше «0630 123 4567» в HU теряло последнюю
+  // цифру: 0 снимался сразу, 10-я цифра обрезалась маской. 2) Жёсткий стоп (phBad) только для мусора. 3) Мягкое предупреждение (phWarn,
+  // оранжевым, отправку не блокирует): начало номера не из плана нумерации страны или маска отрезала лишние цифры.
+  var TRUNK={'36':['06'],'7':['8'],'375':['80']};
+  var MOB1={'43':'6','49':'1','39':'3'};
+  var PLAN={'48':/^(45|5[0137]|6[069]|7[2389]|88|1[2-8]|2[2-59]|3[2-4]|4[1-468]|5[2-69]|6[1-358]|67|7[1456]|8[1-79]|9[145])/,
+    '36':/^(1|20|30|31|50|70|2[2-9]|3[2-7]|4[24-9]|5[2-4679]|6[23689]|7[2-9]|8[02-5789]|9[2-69])/,'359':/^[2-9]/,'385':/^([1-5]|9)/,
+    '386':/^([1-57]|6[4589])/,'381':/^([1-3]|6)/,'387':/^([3-5]|6)/,'420':/^[2-7]/,'421':/^([2-5]|9)/,'40':/^[237]/,'34':/^[6-9]/,'351':/^[29]/,
+    '30':/^(2|69)/,'39':/^[03]/,'49':/^([2-9]|1[5-7])/,'43':/^[1-7]/,'33':/^[1-79]/,'370':/^[3-6]/,'371':/^[26]/,'372':/^([34567]|8[1-3])/,
+    '357':/^[29]/,'382':/^[2-46]/,'66':/^[2-9]/,'63':/^[2-9]/,'62':/^[2-8]/,'52':/^[2-9]/,'57':/^(3|60)/,'225':/^(0[157]|2[157])/,'90':/^[2-5]/,
+    '7':/^[3489]/,'375':/^[1-4]/,'380':/^[3-9]/};
+  var PH_CUT=false;
+  function phDigits(v){ var d=v.replace(/\D/g,''); PH_CUT=false;
+    if(d.slice(0,2+CCD.length)==='00'+CCD) d=d.slice(2+CCD.length);
+    if(d.slice(0,CCD.length)===CCD){ var rest=d.slice(CCD.length);
+      if(d.length>L.phMax || (rest.length>=Math.max(9,L.phMin) && (!MOB1[CCD]||rest[0]===MOB1[CCD]))) d=rest; }
+    var tr=TRUNK[CCD]||[], keep=0;
+    for(var i=0;i<tr.length;i++){ var t=tr[i];
+      if(d.length<t.length ? t.slice(0,d.length)===d : d.slice(0,t.length)===t){ if(d.length-t.length>=L.phMin) d=d.slice(t.length); else keep=t.length; break; } }
+    if(CCD==='36'&&d[0]==='6'&&d.length>=10) d=d.slice(1);   // венгры пишут «6 30 123 4567» вместо «06 30 …»: с 6 номера в HU не начинаются
+    if(!keep&&L.ph0&&d[0]==='0') d=d.slice(1);
+    if(d.length>L.phMax+keep) PH_CUT=true;
+    return d.slice(0,L.phMax+keep); }
+  function phWarn(d){ var p=PLAN[CCD]; if(CCD==='36'&&d.length>=8){ var m=/^(20|30|31|50|70)/.test(d); if((d.length===9)!==m) return true; }   // HU: 9 цифр только у мобильных 20/30/31/50/70, у стационарных 8
+    return PH_CUT || SEQ6.test(d) || (!!p && d.length>=L.phMin && !p.test(d)); }
   // группы по 3, но последняя не должна быть из одной цифры («664 123 456 7» → «664 123 4567»)
   function phFmt(d){ var g=d.match(/\d{1,3}/g)||[]; if(g.length>1&&g[g.length-1].length===1){ g[g.length-2]+=g.pop(); } return g.join(' '); }
-  function phBad(d){ return d.length<L.phMin || new RegExp('^(\\d)\\1{'+(d.length-1)+'}$').test(d) || d==='123456789' || d==='987654321'; }
+  var SEQ7=/(0123456|1234567|2345678|3456789|4567890|9876543|8765432|7654321|6543210)/, SEQ6=/(012345|123456|234567|345678|456789|567890|987654|876543|765432|654321|543210)/;
+  function phBad(d){ return d.length<L.phMin || /^(\d)\1+$/.test(d) || SEQ7.test(d); }   // жёстко: коротко, одна цифра, 7+ подряд
   Array.prototype.forEach.call(document.querySelectorAll('input[name=phone]'), function(ph){
-    ph.addEventListener('input', function(){ ph.value=phFmt(phDigits(ph.value)); ph.closest('.phone-field').classList.remove('bad'); ph.classList.remove('bad'); });
+    ph.addEventListener('input', function(){ var d=phDigits(ph.value); ph.value=phFmt(d); var fld=ph.closest('.phone-field'); fld.classList.remove('bad'); ph.classList.remove('bad'); fld.classList.toggle('warn',phWarn(d)); });
   });
 
   // --- «спасибо»: днём обещаем звонок ~15 минут, ночью (21:00–8:00) — завтра с 8:00 (?hour=N — для проверки)
